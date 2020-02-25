@@ -22,16 +22,17 @@ class BugsService {
     async create(bugData) {
         return await _repository.create(bugData)
     }
-    //TODO need to fix
+    //TODO need to fix - allows bug to be edited
     async editBug(id, updateData) {
         let bug = await _repository.findById(id, updateData)
-        if (bug._id.closed) {
-            throw new BadRequest("Bug Closed and cannot be edited")
-        }
+        // if (closed) {
+        //     throw new BadRequest("Bug Closed and cannot be edited")
+        // }
         return await _repository.findByIdAndUpdate(id, bug, {
-            new: true,
+            new: true
         });
     }
+
 
     async deleteBug(id) {
         return await _repository.findByIdAndUpdate(id, {
