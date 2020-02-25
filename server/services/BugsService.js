@@ -25,9 +25,10 @@ class BugsService {
     //TODO need to fix - allows bug to be edited
     async editBug(id, updateData) {
         let bug = await _repository.findById(id, updateData)
-        // if (closed) {
-        //     throw new BadRequest("Bug Closed and cannot be edited")
-        // }
+        // @ts-ignore
+        if (bug.closed) {
+            throw new BadRequest("Bug Closed and cannot be edited")
+        }
         return await _repository.findByIdAndUpdate(id, bug, {
             new: true
         });
